@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "vpkldoMd9wXslds5zRATJjKw/8Ba350cgepYOfmJETq9ReIbS3h/B5Qy5Xt2f0H6xhmv/828Sp0cLwLTtYXitw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\AdriF\\source\\repos\\CQRSBookingKata\\src\\BookingKata\\BookingKata.Domain\\BookingKata.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\AdriF\\.nuget\\packages\\fluentvalidation\\9.1.2\\fluentvalidation.9.1.2.nupkg.sha512",
+    "C:\\Users\\AdriF\\.nuget\\packages\\mediatr\\8.1.0\\mediatr.8.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

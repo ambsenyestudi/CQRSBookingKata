@@ -1,0 +1,9 @@
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\bin\Debug\netcoreapp3.1\BookingKata.Domain.deps.json
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\bin\Debug\netcoreapp3.1\BookingKata.Domain.dll
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\obj\Debug\netcoreapp3.1\BookingKata.Domain.csprojAssemblyReference.cache
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\obj\Debug\netcoreapp3.1\BookingKata.Domain.AssemblyInfoInputs.cache
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\obj\Debug\netcoreapp3.1\BookingKata.Domain.AssemblyInfo.cs
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\bin\Debug\netcoreapp3.1\BookingKata.Domain.pdb
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\obj\Debug\netcoreapp3.1\BookingKata.Domain.dll
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\obj\Debug\netcoreapp3.1\BookingKata.Domain.pdb
+C:\Users\AdriF\source\repos\CQRSBookingKata\src\BookingKata\BookingKata.Domain\obj\Debug\netcoreapp3.1\BookingKata.Domain.csproj.CoreCompileInputs.cache

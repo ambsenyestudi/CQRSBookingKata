@@ -3,10 +3,10 @@ using System;
 
 namespace BookingKata.Domain.Bookings.Reading
 {
-    public class BookingOptionsValidator : AbstractValidator<BookingOptionsQuery>
+    public class SeachBookingOptionsValidator : AbstractValidator<SearchBookingOptionsQuery>
     {
         private const int MIN_LOCATION_LETTERS = 3;
-        public BookingOptionsValidator()
+        public SeachBookingOptionsValidator()
         {
             RuleFor(arq => arq.CheckInDate).GreaterThanOrEqualTo(DateTime.Today);
             RuleFor(arq => arq.CheckOutDate).GreaterThanOrEqualTo(DateTime.Today.AddDays(1));

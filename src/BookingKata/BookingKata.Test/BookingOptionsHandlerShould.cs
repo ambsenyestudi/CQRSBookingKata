@@ -15,20 +15,20 @@ namespace BookingKata.Test
     public class BookingOptionsHandlerShould
     {
         private readonly IBookingsRepository repoMock;
-        private readonly BookingOptionsValidator validator;
-        private readonly BookingOptionsHandler sut;
+        private readonly SeachBookingOptionsValidator validator;
+        private readonly SearchBookingOptionsHandler sut;
 
         public BookingOptionsHandlerShould()
         {
             repoMock = Substitute.For<IBookingsRepository>();
-            validator = new BookingOptionsValidator();
-            sut = new BookingOptionsHandler(repoMock);
+            validator = new SeachBookingOptionsValidator();
+            sut = new SearchBookingOptionsHandler(repoMock);
         }
         [Fact]
         public async Task GetEmptyWhenNoRooms()
         {
             repoMock.GetBookingOptionsAsync(default).ReturnsForAnyArgs(Task.FromResult(default(IEnumerable<BookingOption>)));
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(5),
@@ -44,7 +44,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveAtlistTodayCheckIn()
         {
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today.AddDays(-1),
                 CheckOutDate = DateTime.Today.AddDays(5),
@@ -61,7 +61,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveAtListOneDayStay()
         {
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today,
@@ -78,7 +78,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveAnAdults()
         {
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -95,7 +95,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveARoom()
         {
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -112,7 +112,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveNonOrSomeChildren()
         {
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -129,7 +129,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveLocation()
         {
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -147,7 +147,7 @@ namespace BookingKata.Test
         public async Task GetBookingOptions()
         {
             repoMock.GetBookingOptionsAsync(default).ReturnsForAnyArgs(Task.FromResult(CreateOptions()));
-            var query = new BookingOptionsQuery
+            var query = new SearchBookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),

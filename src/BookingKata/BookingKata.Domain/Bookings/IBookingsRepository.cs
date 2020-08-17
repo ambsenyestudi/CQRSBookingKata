@@ -8,6 +8,6 @@ namespace BookingKata.Domain.Bookings
 {
     public interface IBookingsRepository
     {
-        Task<IEnumerable<BookingOption>> GetBookingOptionsAsync(BookingOptionsQuery query);
+        Task<IEnumerable<BookingOption>> GetBookingOptionsAsync(SearchBookingOptionsQuery query);
     }
 }

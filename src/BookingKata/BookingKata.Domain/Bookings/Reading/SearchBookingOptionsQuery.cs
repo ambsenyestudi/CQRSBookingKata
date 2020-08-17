@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BookingKata.Domain.Bookings.Reading
 {
-    public class BookingOptionsQuery : IRequest<IEnumerable<BookingOption>>
+    public class SearchBookingOptionsQuery : IRequest<IEnumerable<BookingOption>>
     {
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }

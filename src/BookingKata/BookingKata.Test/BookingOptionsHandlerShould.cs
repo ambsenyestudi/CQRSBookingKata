@@ -1,32 +1,34 @@
+using BookingKata.Domain.Bookings;
+using BookingKata.Domain.Bookings.Reading;
 using BookingKata.Domain.Rooms;
+using FluentValidation.TestHelper;
 using NSubstitute;
 using System;
-using FluentValidation;
-using FluentValidation.TestHelper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace BookingKata.Test
 {
-    public class AvailableRoomsHandlerShould
+    public class BookingOptionsHandlerShould
     {
-        private readonly IRoomRepository repoMock;
-        private readonly AvailableRoomsValidator validator;
-        private readonly AvailableRoomsHandler sut;
+        private readonly IBookingsRepository repoMock;
+        private readonly BookingOptionsValidator validator;
+        private readonly BookingOptionsHandler sut;
 
-        public AvailableRoomsHandlerShould()
+        public BookingOptionsHandlerShould()
         {
-            repoMock = Substitute.For<IRoomRepository>();
-            validator = new AvailableRoomsValidator();
-            sut = new AvailableRoomsHandler(repoMock);
+            repoMock = Substitute.For<IBookingsRepository>();
+            validator = new BookingOptionsValidator();
+            sut = new BookingOptionsHandler(repoMock);
         }
         [Fact]
         public async Task GetEmptyWhenNoRooms()
         {
-            repoMock.GetAllFreeRoomsAsync(default).ReturnsForAnyArgs(Task.FromResult(default(IEnumerable<Room>)));
-            var query = new AvailableRoomsQuery
+            repoMock.GetBookingOptionsAsync(default).ReturnsForAnyArgs(Task.FromResult(default(IEnumerable<BookingOption>)));
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(5),
@@ -42,7 +44,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveAtlistTodayCheckIn()
         {
-            var query = new AvailableRoomsQuery
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today.AddDays(-1),
                 CheckOutDate = DateTime.Today.AddDays(5),
@@ -59,7 +61,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveAtListOneDayStay()
         {
-            var query = new AvailableRoomsQuery
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today,
@@ -76,7 +78,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveAnAdults()
         {
-            var query = new AvailableRoomsQuery
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -93,7 +95,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveARoom()
         {
-            var query = new AvailableRoomsQuery
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -110,7 +112,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveNonOrSomeChildren()
         {
-            var query = new AvailableRoomsQuery
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -127,7 +129,7 @@ namespace BookingKata.Test
         [Fact]
         public void HaveLocation()
         {
-            var query = new AvailableRoomsQuery
+            var query = new BookingOptionsQuery
             {
                 CheckInDate = DateTime.Today,
                 CheckOutDate = DateTime.Today.AddDays(1),
@@ -142,9 +144,79 @@ namespace BookingKata.Test
         }
 
         [Fact]
+        public async Task GetBookingOptions()
+        {
+            repoMock.GetBookingOptionsAsync(default).ReturnsForAnyArgs(Task.FromResult(CreateOptions()));
+            var query = new BookingOptionsQuery
+            {
+                CheckInDate = DateTime.Today,
+                CheckOutDate = DateTime.Today.AddDays(1),
+                ChildrenCount = 0,
+                Location = "Panamá",
+                NumberOfAdults = 1,
+                NumberOfRoomsNeeded = 1
+            };
+            var result = await sut.Handle(query, CancellationToken.None);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
         public void HaveKnowLocation()
         {
             Assert.True(false);
+        }
+
+        private IEnumerable<BookingOption> CreateOptions()
+        {
+            return new List<BookingOption>
+            {
+                new BookingOption(
+                    new Hotel("Panamá", "El grandioso hotel", Guid.NewGuid(), 25),
+                    new List<RoomWithPrices>
+                    {
+                        new RoomWithPrices(
+                            "101",
+                            new List<Price>
+                            {
+                                CreatePrice("OnePerson", "$16.0"),
+                                CreatePrice("TwoPepeople", "$18.0")
+                            }
+                        )
+                    }
+                ),
+                new BookingOption(
+                    new Hotel("Panamá", "Hotel Lujos", Guid.NewGuid(), 45),
+                    new List<RoomWithPrices>
+                    {
+                        new RoomWithPrices(
+                            "701",
+                            new List<Price>
+                            {
+                                CreatePrice("OnePerson", "$26.0"),
+                                CreatePrice("TwoPepeople", "$28.0")
+                            }
+                        )
+                    }
+                ),
+            };
+        }
+
+        private Price CreatePrice(string description, string price)
+        {
+            var (value, currency) = ProcessPrice(price);
+            return new Price(value, currency, description);
+        }
+
+        private (double, string) ProcessPrice(string price)
+        {
+            var currency = price[0] + "";
+            var value = price.Substring(1);
+            if(double.TryParse(value, out double outValue))
+            {
+                return (outValue, currency);
+            }
+            return (10.0d, currency);
+
         }
     }
 }
